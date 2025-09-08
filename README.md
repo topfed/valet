@@ -1,4 +1,4 @@
-# Experts 2.0
+# CMS Valet
 
 ## Installation process
 
