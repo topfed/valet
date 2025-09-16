@@ -11,7 +11,7 @@ const KeywordFaq = () => {
   );
 
   return (
-    <section className="bg-white">
+    <section className="bg-white" id="faq">
       <div className="container cont-space">
         <p className="subtitle">{options?.subTitle}</p>
         <h2>{options?.title?.replace("###", single?.name)}</h2>

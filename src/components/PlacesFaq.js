@@ -11,7 +11,7 @@ const PlacesFaq = () => {
   );
 
   return (
-    <section className="bg-white">
+    <section className="bg-white" id="faq">
       <div className="container cont-space">
         <p className="subtitle">{option?.subTitle}</p>
         <h2>{option?.title?.replace("###", keyword?.name)}</h2>

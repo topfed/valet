@@ -37,7 +37,7 @@ const Places = () => {
           >
             {category?.name}
           </a>
-          <svg width="32px" height="32px">
+          <svg width="32px" height="20px">
             <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
           </svg>
           <a
@@ -46,7 +46,7 @@ const Places = () => {
           >
             {keyword?.name}
           </a>
-          <svg width="32px" height="32px">
+          <svg width="32px" height="20px">
             <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
           </svg>
           <a href={`/${city?.slug}/`} className="inColor underline text-center">
