@@ -5,7 +5,7 @@ const Faq = () => {
   const { settings, context } = useGlobal();
   const options = (settings[context?.type] || [])?.find((e) => e?.id === "Faq");
   return (
-    <section className="bg-light">
+    <section className="bg-light" id="faq">
       <div className="container cont-space">
         <p className="subtitle">{options?.subTitle}</p>
         <h2>{options?.title}</h2>

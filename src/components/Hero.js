@@ -54,7 +54,7 @@ const Hero = () => {
           <p>{categoryPlaceData?.subTitle || data?.shortContent}</p>
         )}
         {type === "place" && (
-          <p className="d-flex justify-center gap-1">
+          <p className="d-flex justify-center gap-1 italic">
             {context?.places?.length * 5 +
               placeData?.keyword?.name?.length -
               placeData?.city?.name?.length}{" "}

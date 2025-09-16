@@ -30,20 +30,26 @@ const Places = () => {
   return (
     <section className="bg-white">
       <div className="container cont-space">
-        <p className="d-flex justify-center gap-1">
-          <a href={`/${category?.slug}/`} className="inColor underline">
+        <p className="d-flex justify-center gap-1 items-center">
+          <a
+            href={`/${category?.slug}/`}
+            className="inColor underline text-center"
+          >
             {category?.name}
           </a>
-          <svg width="20px" height="20px">
+          <svg width="32px" height="32px">
             <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
           </svg>
-          <a href={`/${keyword?.slug}/`} className="inColor underline">
+          <a
+            href={`/${keyword?.slug}/`}
+            className="inColor underline text-center"
+          >
             {keyword?.name}
           </a>
-          <svg width="20px" height="20px">
+          <svg width="32px" height="32px">
             <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
           </svg>
-          <a href={`/${city?.slug}/`} className="inColor underline">
+          <a href={`/${city?.slug}/`} className="inColor underline text-center">
             {city?.name}
           </a>
         </p>
@@ -214,7 +220,7 @@ const Places = () => {
                   height="60px"
                   className="rounded-full"
                 /> */}
-                <div className="w-60 h-60 overflow-hidden rounded-full">
+                <div className="w-60 h-60 overflow-hidden rounded-full border-dash">
                   <img
                     src={e?.image}
                     loading="lazy"
