@@ -52,10 +52,7 @@ body {
 @supports selector(body:has(input:checked)) {
   body:has(#menu-toggle:checked),
   body:has(#search-toggle:checked),
-  body:has(#location-toggle:checked),
-  body:has(#cart-toggle:checked),
-  body:has(#favorite-toggle:checked),
-  body:has(#filter-toggle:checked) {
+  body:has(#request-toggle:checked) {
     overflow: hidden;
   }
 }
@@ -80,6 +77,9 @@ a:hover {
 }
 a.active {
   color: var(--c-1);
+}
+p a {
+  text-decoration: underline;
 }
 ul {
   list-style: disc inside;
@@ -535,7 +535,7 @@ h6 {
   width: 40px;
 }
 .h-600 {
-  height: 600px;
+  height: 500px;
 }
 .h-compare {
   height: calc(100vh - 240px);
@@ -1021,34 +1021,16 @@ footer a:hover {
 /* ===== RADIO AND CHECKBOX CONTROLERS ===== */
 
 body:has(#menu-toggle:checked) nav.modal,
-body:has(#compare-toggle:checked) .compare,
 body:has(#search-toggle:checked) .modal.search,
-body:has(#location-toggle:checked) .modal.locationList,
-body:has(#cart-toggle:checked) .modal.cart,
-body:has(#favorite-toggle:checked) .modal.favorite,
-body:has(#filter-toggle:checked) .modal.filter {
+body:has(#request-toggle:checked) .modal.request {
   display: flex;
   animation: fadeSlideDown 0.3s ease forwards;
 }
 
 #menu-toggle:checked ~ #bg,
-#compare-toggle:checked ~ #bg,
 #search-toggle:checked ~ #bg,
-#location-toggle:checked ~ #bg,
-#cart-toggle:checked ~ #bg,
-#favorite-toggle:checked ~ #bg,
-#filter-toggle:checked ~ .bg {
+#request-toggle:checked ~ #bg {
   display: flex;
-}
-.container:not(:has(:target)) #tabs a[href="#description"],
-.container:has(#description:target) #tabs a[href="#description"],
-.container:has(#specification:target) #tabs a[href="#specification"],
-.container:has(#disclaimer:target) #tabs a[href="#disclaimer"] {
-  background: var(--c-b);
-  color: var(--c-w);
-}
-.variation .active {
-  border: 2px solid var(--c-1);
 }
 
 /* ===== ANIMATIONS CSS ===== */
@@ -1128,7 +1110,7 @@ input[type="checkbox"]:checked ~ .accordion {
   max-height: 100000px;
   opacity: 1;
 }
-.acc:checked ~ .show-more label {
+.acc:checked ~ .show-more {
   display: none;
 }
 
@@ -1387,6 +1369,9 @@ label .arrow.right-0 {
     overflow: visible !important;
     transition: none;
   }
+  .h-600 {
+    height: 700px;
+  }
 }
 
 .swiper {
@@ -1481,4 +1466,14 @@ label .arrow.right-0 {
 #add-to-cart[disabled] {
   opacity: 0.5;
   pointer-events: none;
+}
+.black svg circle,
+.black svg path {
+  fill: #333;
+}
+.black svg path.none {
+  fill: none;
+}
+.black svg path.bg {
+  fill: #fff;
 }

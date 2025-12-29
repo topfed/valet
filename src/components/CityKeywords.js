@@ -1,4 +1,6 @@
 import React from "react";
+import Image from "./Sections/Image";
+import { withPrefix } from "gatsby";
 import { useGlobal } from "../data/useContext";
 import Svg from "./Svg";
 
@@ -13,96 +15,135 @@ const CityKeywords = () => {
   const list = slugData?.filter((e) => e?.type === "category");
   const keywords = slugData?.filter((e) => e?.type === "keyword");
   return (
-    <section className="bg-white">
-      <div className="container no-space">
-        <div className="d-flex text-12 mb-4 gap-2 italic">
-          <ul className="d-flex gap-2">
-            <li>
-              <a href={`/`}>Home</a>
-            </li>
-            <li>/</li>
-            <li>{single?.name}</li>
-          </ul>
-        </div>
-        {/* <p className="subtitle">{options?.subTitle}</p> */}
-        <h2>{options?.title.replace("###", single?.name)}</h2>
-        {single?.content?.split("###")[0] && (
-          <p>{single?.content?.split("###")[0]}</p>
-        )}
-        {single?.content?.split("###")[1] && (
-          <p>{single?.content?.split("###")[1]}</p>
-        )}
-        <div className="d-grid grid-3-1 gap-4 mt-5">
-          {list
-            ?.sort((a, b) => a.volume - b.volume)
-            ?.map((e, i) => {
-              return (
-                <div className="box-border p-0" key={i}>
-                  <input
-                    type="checkbox"
-                    id={`toggle-${i}`}
-                    className="d-none"
-                    defaultChecked={i === 0}
-                  />
-                  <label
-                    htmlFor={`toggle-${i}`}
-                    className="d-flex justify-between items-center gap-3 p-3"
-                    aria-label={e?.name}
-                  >
-                    <div className="d-flex items-center gap-3">
-                      <Svg name={e?.slug} width="32px" height="32px" />
-                      <h3 className="m-0 pr-3">{e?.name}</h3>
-                    </div>
-                    <svg
-                      width="24px"
-                      height="24px"
-                      className="mobile-only arrow"
-                    >
-                      <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path>
-                    </svg>
-                  </label>
+    <>
+      <section className="relative w-100 h-600 overflow-hidden">
+        <Image
+          data={{
+            src: withPrefix(`/images/business.webp`),
+            srcm: withPrefix(`/images/heroMobile.webp`),
+            alt: `${options?.imgAlt}`,
+            loading: "eager",
+            fetchpriority: "high",
+            local: true,
+            className: "object-cover absolute h-100 w-100",
+          }}
+        />
+        <div className="h-600 absolute w-100 bg-dark opacity-60"></div>
+        <div className="d-flex relative flex-col justify-center items-center h-600 w-90 text-center m-c">
+          <h1
+            className="light p-0 fade-in delay-500"
+            dangerouslySetInnerHTML={{
+              __html: single?.title,
+            }}
+          />
+          <p className="light font-300 mb-5 fade-in delay-750">
+            {single?.shortContent}
+          </p>
 
-                  <div className="accordion accordion-m">
-                    {e?.shortContent && (
-                      <p className="ph-3">{e?.shortContent}</p>
-                    )}
-                    <ul className="ph-3">
-                      {keywords
-                        ?.filter((f) => f?.category === e?.slug)
-                        ?.sort((a, b) => b.volume - a.volume)
-                        ?.slice(0, 10)
-                        ?.map((h, u) => {
-                          if (
-                            !settings?.groupedByCity[single?.slug].includes(
-                              h?.slug
-                            )
-                          )
-                            return null;
-                          return (
-                            <li key={u}>
-                              <a
-                                href={`/${h?.slug}/${single?.slug}/`}
-                                className="pv-1 block"
-                              >
-                                {h?.name}
-                              </a>
-                            </li>
-                          );
-                        })}
-                    </ul>
-                    <a
-                      className="ph-3 mt-1 mb-3 block"
-                      href={`/${e?.slug}/${single?.slug}/`}
-                    >
-                      {options?.buttonText?.replace("###", e?.name)}
-                    </a>
-                  </div>
-                </div>
-              );
-            })}
+          <label
+            htmlFor="request-toggle"
+            role="button"
+            aria-label="Request a Quote"
+            className="btx d-flex items-center gap-2 cursor-link fade-in delay-1000"
+          >
+            Request a Quote
+          </label>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section className="bg-white">
+        <div className="container no-space">
+          <div className="d-flex text-12 mb-4 gap-2 italic">
+            <ul className="d-flex gap-2">
+              <li>
+                <a href={`/`} className="underline">
+                  Home
+                </a>
+              </li>
+              <li>/</li>
+              <li>{single?.name}</li>
+            </ul>
+          </div>
+          {/* <p className="subtitle">{options?.subTitle}</p> */}
+          <h2>{options?.title.replace("###", single?.name)}</h2>
+          {single?.content?.split("###")[0] && (
+            <p>{single?.content?.split("###")[0]}</p>
+          )}
+          {single?.content?.split("###")[1] && (
+            <p>{single?.content?.split("###")[1]}</p>
+          )}
+          <div className="d-grid grid-3-1 gap-4 mt-5">
+            {list
+              ?.sort((a, b) => a.volume - b.volume)
+              ?.map((e, i) => {
+                return (
+                  <div className="box-border p-0" key={i}>
+                    <input
+                      type="checkbox"
+                      id={`toggle-${i}`}
+                      className="d-none"
+                      defaultChecked={i === 0}
+                    />
+                    <label
+                      htmlFor={`toggle-${i}`}
+                      className="d-flex justify-between items-center gap-3 p-3"
+                      aria-label={e?.name}
+                    >
+                      <div className="d-flex items-center gap-3">
+                        <Svg name={e?.slug} width="32px" height="32px" />
+                        <h3 className="m-0 pr-3">{e?.name}</h3>
+                      </div>
+                      <svg
+                        width="24px"
+                        height="24px"
+                        className="mobile-only arrow"
+                      >
+                        <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path>
+                      </svg>
+                    </label>
+
+                    <div className="accordion accordion-m">
+                      {e?.shortContent && (
+                        <p className="ph-3">{e?.shortContent}</p>
+                      )}
+                      <ul className="ph-3">
+                        {keywords
+                          ?.filter((f) => f?.category === e?.slug)
+                          ?.sort((a, b) => b.volume - a.volume)
+                          ?.slice(0, 10)
+                          ?.map((h, u) => {
+                            if (
+                              !settings?.groupedByCity[single?.slug].includes(
+                                h?.slug
+                              )
+                            )
+                              return null;
+                            return (
+                              <li key={u}>
+                                <a
+                                  href={`/${h?.slug}/${single?.slug}/`}
+                                  className="pv-1 block"
+                                >
+                                  {h?.name}
+                                </a>
+                              </li>
+                            );
+                          })}
+                      </ul>
+                      <a
+                        className="ph-3 mt-1 mb-3 block"
+                        href={`/${e?.slug}/${single?.slug}/`}
+                      >
+                        {options?.buttonText?.replace("###", e?.name)}
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

@@ -1,5 +1,7 @@
 import React from "react";
 import { useGlobal } from "../data/useContext";
+import Image from "./Sections/Image";
+import { withPrefix } from "gatsby";
 import { splitParagraph, slugToTitle } from "../data/functions";
 
 const KeywordCity = () => {
@@ -17,46 +19,85 @@ const KeywordCity = () => {
   const [first, second] = splitParagraph(content);
   // console.log(single);
   return (
-    <section className="bg-light">
-      <div className="container no-space">
-        <div className="d-flex text-12 mb-4 gap-2 italic">
-          <ul className="d-flex gap-2">
-            <li>
-              <a href={`/`}>Home</a>
-            </li>
-            <li>/</li>
-            <li>
-              <a href={`/${single?.category}/`}>
-                {slugToTitle(single?.category)}
-              </a>
-            </li>
-            <li>/</li>
-            <li>{single?.name}</li>
-          </ul>
+    <>
+      <section className="relative w-100 h-600 overflow-hidden">
+        <Image
+          data={{
+            src: withPrefix(`/images/business.webp`),
+            srcm: withPrefix(`/images/heroMobile.webp`),
+            alt: `${options?.imgAlt}`,
+            loading: "eager",
+            fetchpriority: "high",
+            local: true,
+            className: "object-cover absolute h-100 w-100",
+          }}
+        />
+        <div className="h-600 absolute w-100 bg-dark opacity-60"></div>
+        <div className="d-flex relative flex-col justify-center items-center h-600 w-90 text-center m-c">
+          <h1
+            className="light p-0 fade-in delay-500"
+            dangerouslySetInnerHTML={{
+              __html: single?.title,
+            }}
+          />
+          <p className="light font-300 mb-5 fade-in delay-750">
+            {single?.shortContent}
+          </p>
+
+          <label
+            htmlFor="request-toggle"
+            role="button"
+            aria-label="Request a Quote"
+            className="btx d-flex items-center gap-2 cursor-link fade-in delay-1000"
+          >
+            Request a Quote
+          </label>
         </div>
-        {/* <p className="subtitle">{options?.subTitle}</p> */}
-        <h2>{options?.title?.replace("###", single?.name)}</h2>
-        {first && <p>{first}</p>}
-        {second && <p>{second}</p>}
-        <div className="d-flex flex-wrap mt-5 gap-2">
-          {list
-            ?.sort((a, b) => a.volume - b.volume)
-            ?.map((e, i) => {
-              if (!settings?.groupedByCity[e?.slug].includes(single?.slug))
-                return null;
-              return (
-                <a
-                  className="btx-no"
-                  key={i}
-                  href={`/${single?.slug}/${e?.slug}/`}
-                >
-                  {e?.name}
+      </section>
+
+      <section className="bg-light">
+        <div className="container no-space">
+          <div className="d-flex text-12 mb-4 gap-2 italic">
+            <div className="d-flex flex-wrap gap-2">
+              <span>
+                <a href={`/`} className="underline">
+                  Home
                 </a>
-              );
-            })}
+              </span>
+              <span>/</span>
+              <span>
+                <a href={`/${single?.category}/`} className="underline">
+                  {slugToTitle(single?.category)}
+                </a>
+              </span>
+              <span>/</span>
+              <span>{single?.name}</span>
+            </div>
+          </div>
+          {/* <p className="subtitle">{options?.subTitle}</p> */}
+          <h2>{options?.title?.replace("###", single?.name)}</h2>
+          {first && <p>{first}</p>}
+          {second && <p>{second}</p>}
+          <div className="d-flex flex-wrap mt-5 gap-2">
+            {list
+              ?.sort((a, b) => a.volume - b.volume)
+              ?.map((e, i) => {
+                if (!settings?.groupedByCity[e?.slug].includes(single?.slug))
+                  return null;
+                return (
+                  <a
+                    className="btx-no"
+                    key={i}
+                    href={`/${single?.slug}/${e?.slug}/`}
+                  >
+                    {e?.name}
+                  </a>
+                );
+              })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

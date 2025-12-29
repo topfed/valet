@@ -68,6 +68,7 @@ export default function Template({ pageContext }) {
   return (
     <GlobalProvider value={allData}>
       <Header />
+      {/* <Hero /> */}
       {(components || []).map((block, index) => {
         const Component = COMPONENT_MAP[block?.id];
         if (!Component) return null;

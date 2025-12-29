@@ -18,7 +18,9 @@ const Selection = () => {
           <div className="d-flex text-12 mb-4 gap-2 italic">
             <ul className="d-flex gap-2">
               <li>
-                <a href={`/`}>Home</a>
+                <a href={`/`} className="underline">
+                  Home
+                </a>
               </li>
               <li>/</li>
               <li>{options?.title}</li>

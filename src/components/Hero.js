@@ -11,8 +11,6 @@ const Hero = () => {
 
   return (
     <section className="relative w-100 h-600 overflow-hidden">
-      {/* <div className="container cont-space"> */}
-      {/* ==== VIDEO BACKGROUND (DESKTOP) ==== */}
       {options?.videoMp4 && (
         <video
           className="absolute w-100 h-100 object-cover"
@@ -24,8 +22,6 @@ const Hero = () => {
           src={withPrefix(`/${options.videoMp4}`)}
         />
       )}
-
-      {/* ==== FALLBACK IMAGE FOR MOBILE / NO VIDEO ==== */}
       {!options?.videoMp4 && (
         <Image
           data={{
@@ -39,11 +35,7 @@ const Hero = () => {
           }}
         />
       )}
-
-      {/* DARK OVERLAY */}
       <div className="h-600 absolute w-100 bg-dark opacity-60"></div>
-
-      {/* CONTENT */}
       <div className="d-flex relative flex-col justify-center items-center h-600 w-80 text-center m-c">
         <h1
           className="light fade-in delay-500"
@@ -56,26 +48,16 @@ const Hero = () => {
         </p>
 
         {options?.displayButton && (
-          <a
-            className="btx d-flex items-center gap-2 fade-in delay-1000"
-            href={options?.buttonTextLink}
+          <label
+            htmlFor="request-toggle"
+            role="button"
             aria-label={options?.buttonText}
+            className="btx d-flex items-center gap-2 cursor-link fade-in delay-1000"
           >
             {options?.buttonText}
-            {/* <svg
-              focusable="false"
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              width="20"
-              height="20"
-              fill="#ffffff"
-            >
-              <path d="M6 6v2h8.59L5 17.59 6.41 19 16 9.41V18h2V6z"></path>
-            </svg> */}
-          </a>
+          </label>
         )}
       </div>
-      {/* </div> */}
     </section>
   );
 };

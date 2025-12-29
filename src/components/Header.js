@@ -62,6 +62,12 @@ const Header = () => {
             name="modal-toggle"
             className="d-none"
           />
+          <input
+            type="radio"
+            id="request-toggle"
+            name="modal-toggle"
+            className="d-none"
+          />
           <div className="d-flex items-center opart1">
             <label
               htmlFor="menu-toggle"
