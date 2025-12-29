@@ -1,86 +1,81 @@
 import React from "react";
 import { useGlobal } from "../data/useContext";
-import Svg from "./Svg";
+import Image from "./Sections/Image";
+import { withPrefix } from "gatsby";
 
 const Hero = () => {
-  const { settings, context, slugData } = useGlobal();
-  const options = settings["hero"] || {};
-  const optionsPlace = (settings[context?.type] || [])?.find(
-    (e) => e?.id === "Places"
+  const { settings, context } = useGlobal();
+  const options = (settings[context?.type] || [])?.find(
+    (e) => e?.id === "Hero"
   );
-  const optionsCategoryPlace = (settings[context?.type] || [])?.find(
-    (e) => e?.id === "CategoryPlace"
-  );
-  const type = context?.type || "index";
-  const slug = context?.slug || "/";
-  const data = slugData?.find((e) => e?.slug === slug);
-  const placeData = {};
-  const categoryPlaceData = {};
 
-  if (type === "categoryPlace") {
-    categoryPlaceData.city = slugData?.find((e) => e?.slug === context?.city);
-    categoryPlaceData.category = slugData?.find(
-      (e) => e?.slug === context?.category
-    );
-    categoryPlaceData.title = optionsCategoryPlace?.titleHero
-      ?.replace("###", categoryPlaceData?.category?.name)
-      ?.replace("##", categoryPlaceData?.city?.name);
-    categoryPlaceData.subTitle = optionsCategoryPlace?.subtitleHero
-      ?.replace("###", categoryPlaceData?.category?.name)
-      ?.replace("##", categoryPlaceData?.city?.name);
-  }
-
-  if (type === "place") {
-    placeData.keyword = slugData?.find((e) => e?.slug === context?.keyword);
-    placeData.city = slugData?.find((e) => e?.slug === context?.city);
-    placeData.category = slugData?.find(
-      (e) => e?.slug === placeData?.keyword?.category
-    );
-    placeData.title = optionsPlace?.titleHero
-      ?.replace("###", placeData?.keyword?.name)
-      ?.replace("##", placeData?.city?.name);
-  }
   return (
-    <section className="hero d-flex justify-center">
-      {/* <Image data={options?.heroImg} /> */}
-      {/* <div className="bg"></div> */}
-      <div className="wrap">
-        <h1
-          dangerouslySetInnerHTML={{
-            __html: placeData?.title || categoryPlaceData?.title || data?.title,
+    <section className="relative w-100 h-600 overflow-hidden">
+      {/* <div className="container cont-space"> */}
+      {/* ==== VIDEO BACKGROUND (DESKTOP) ==== */}
+      {options?.videoMp4 && (
+        <video
+          className="absolute w-100 h-100 object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          src={withPrefix(`/${options.videoMp4}`)}
+        />
+      )}
+
+      {/* ==== FALLBACK IMAGE FOR MOBILE / NO VIDEO ==== */}
+      {!options?.videoMp4 && (
+        <Image
+          data={{
+            src: withPrefix(`/${options?.imgDesktop}`),
+            srcm: withPrefix(`/${options?.imgMobile}`),
+            alt: `${options?.imgAlt}`,
+            loading: "eager",
+            fetchpriority: "high",
+            local: true,
+            className: "object-cover absolute h-100 w-100",
           }}
         />
-        {type !== "place" && (
-          <p>{categoryPlaceData?.subTitle || data?.shortContent}</p>
-        )}
-        {type === "place" && (
-          <p className="d-flex justify-center gap-1 italic">
-            {context?.places?.length * 5 +
-              placeData?.keyword?.name?.length -
-              placeData?.city?.name?.length}{" "}
-            {optionsPlace?.crumbHero1}
-            <svg width="20px" height="20px">
-              <path
-                fill="#ffffff"
-                d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"
-              ></path>
-            </svg>
-            {context?.places?.length} {optionsPlace?.crumbHero2}
-          </p>
-        )}
-        {(type === "index" || type === "category" || type === "category") && (
-          <div className="d-flex justify-center mt-3">
-            <a
-              className="btx d-flex justify-center items-center gap-3 rounded-full"
-              href="tel:+442038078434"
-              aria-label={options?.buttonText}
+      )}
+
+      {/* DARK OVERLAY */}
+      <div className="h-600 absolute w-100 bg-dark opacity-60"></div>
+
+      {/* CONTENT */}
+      <div className="d-flex relative flex-col justify-center items-center h-600 w-80 text-center m-c">
+        <h1
+          className="light fade-in delay-500"
+          dangerouslySetInnerHTML={{
+            __html: options?.title,
+          }}
+        />
+        <p className="light font-300 mb-5 fade-in delay-750">
+          {options?.shortContent}
+        </p>
+
+        {options?.displayButton && (
+          <a
+            className="btx d-flex items-center gap-2 fade-in delay-1000"
+            href={options?.buttonTextLink}
+            aria-label={options?.buttonText}
+          >
+            {options?.buttonText}
+            {/* <svg
+              focusable="false"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="#ffffff"
             >
-              <Svg name="Phone" width="32px" height="32px" />
-              {options?.buttonText}
-            </a>
-          </div>
+              <path d="M6 6v2h8.59L5 17.59 6.41 19 16 9.41V18h2V6z"></path>
+            </svg> */}
+          </a>
         )}
       </div>
+      {/* </div> */}
     </section>
   );
 };

@@ -64,10 +64,10 @@ const COMPONENT_MAP = {
 export default function Template({ pageContext }) {
   const { allData } = useStatic(pageContext);
   const components = allData?.settings?.[pageContext?.type] || [];
+  console.log(allData);
   return (
     <GlobalProvider value={allData}>
       <Header />
-      <Hero />
       {(components || []).map((block, index) => {
         const Component = COMPONENT_MAP[block?.id];
         if (!Component) return null;

@@ -30,7 +30,7 @@ exports.sourceNodes = async ({
     };
   });
   const groupedByCity = placesSort
-    ?.filter((a) => a.count > 9)
+    ?.filter((a) => a.count > 5)
     ?.reduce((acc, item) => {
       const parts = item.id.split("-");
       const city = parts.pop();
@@ -145,7 +145,7 @@ exports.createPages = async ({ graphql, actions }) => {
   let c = 0;
   for (const doc of placesSort) {
     c++;
-    if (doc?.count > 9) {
+    if (doc?.count > 5) {
       const parts = doc.id.split("-");
       const city = parts.pop();
       const service = parts.join("-");
@@ -156,10 +156,11 @@ exports.createPages = async ({ graphql, actions }) => {
           keyword: service,
           city: city,
           type: "place",
-          update: doc?.update?.toDate?.().getTime?.(),
+          update: Date.now(),
+          // update: doc?.update?.toDate?.().getTime?.(),
           places:
             [
-              ...doc?.places?.filter((e) => e?.status === 1),
+              ...doc?.places?.filter((e) => e?.status === 3),
               ...doc?.places?.filter((e) => e?.status === 2),
             ] || [],
         },

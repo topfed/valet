@@ -23,7 +23,7 @@ const config = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: `src/data/logo.png`,
+        icon: `static/logo.png`,
         name: process.env.NAME,
         short_name: process.env.NAME,
         start_url: process.env.PUBLIC_URL,
@@ -33,7 +33,7 @@ const config = {
         include_favicon: false,
         icons: [
           {
-            src: `src/data/logo.png`,
+            src: `static/logo.png`,
             sizes: `512x512`,
             type: `image/png`,
           },

@@ -61,3 +61,14 @@ export const productDescription = (description) => {
     description.substring(bestSplitIndex + 1).trim(),
   ];
 };
+
+export const slugToTitle = (text) => {
+  if (!text || typeof text !== "string") return "";
+
+  return text
+    .toLowerCase()
+    .split(/[-_]/g)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};

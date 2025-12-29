@@ -18,8 +18,20 @@ const CategoryPlacesKeywords = () => {
   );
   return (
     <section className="bg-white">
-      <div className="container cont-space">
-        <p className="subtitle">{options?.subTitle}</p>
+      <div className="container no-space">
+        <div className="d-flex text-12 mb-4 gap-2 italic">
+          <ul className="d-flex gap-2">
+            <li>
+              <a href={`/`}>Home</a>
+            </li>
+            <li>/</li>
+            <li>
+              <a href={`/${category?.slug}/`}>{category?.name}</a>
+            </li>
+            <li>/</li>
+            <li>{city?.name}</li>
+          </ul>
+        </div>
         <h2>
           {options?.title
             ?.replace("###", category?.name)
@@ -32,14 +44,14 @@ const CategoryPlacesKeywords = () => {
         </p>
         <div className="d-grid gap-4 mt-5">
           <div className="box-border p-0">
-            <div className="d-flex justify-between items-center gap-3 p-3 h-32">
+            <div className="d-flex justify-between items-center gap-3 p-3">
               <div className="d-flex items-center gap-3">
                 <Svg name={category?.slug} width="40px" height="40px" />
                 <h3 className="m-0 pr-3">{category?.name}</h3>
               </div>
             </div>
             <div className="ph-3 mb-3">
-              <ul className="d-grid grid-3">
+              <ul className="d-grid grid-3-1">
                 {keywords
                   ?.sort((a, b) => b.volume - a.volume)
                   ?.map((h, u) => {

@@ -1,30 +1,23 @@
 import React from "react";
 
 const Image = ({ data }) => {
-  const cloudURL = `https://firebasestorage.googleapis.com/v0/b/spirit-92da0.firebasestorage.app/o/###?alt=media`;
+  const imgProps = {
+    src: data?.src,
+    alt: typeof data?.alt === "string" ? data.alt : "",
+    loading: data?.loading || "lazy",
+    decoding: data?.decoding || "async",
+    fetchpriority: data?.fetchpriority || "low",
+  };
+  if (data?.width) imgProps.width = data.width;
+  if (data?.height) imgProps.height = data.height;
+  if (data?.className) imgProps.className = data.className;
 
-  const imgElement = (
-    <img
-      width={data?.width}
-      height={data?.height}
-      src={cloudURL?.replace("###", encodeURIComponent(`trust/${data?.src}`))}
-      alt={data?.alt}
-      loading={data?.loading || "lazy"}
-      decoding={data?.decoding || "async"}
-      fetchpriority={data?.fetchpriority || "low"}
-    />
-  );
+  const imgElement = <img alt={imgProps.alt} {...imgProps} />;
 
   if (data?.srcm) {
     return (
       <picture>
-        <source
-          srcSet={cloudURL?.replace(
-            "###",
-            encodeURIComponent(`trust/${data?.srcm}`)
-          )}
-          media="(max-width: 768px)"
-        />
+        <source srcSet={data.srcm} media="(max-width: 768px)" />
         {imgElement}
       </picture>
     );

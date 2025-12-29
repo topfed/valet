@@ -18,7 +18,7 @@ const Keywords = () => {
         {options?.content?.split("###")[1] && (
           <p>{options?.content?.split("###")[1]}</p>
         )}
-        <div className="d-grid grid-3 gap-4 mt-5">
+        <div className="d-grid grid-3-1 gap-4 mt-5">
           {categories
             ?.sort((a, b) => a.volume - b.volume)
             ?.map((e, i) => {
@@ -32,7 +32,7 @@ const Keywords = () => {
                   />
                   <label
                     htmlFor={`toggle-${i}`}
-                    className="d-flex justify-between items-center gap-3 p-3 h-32"
+                    className="d-flex justify-between items-center gap-3 p-3"
                     aria-label={e?.name}
                   >
                     <div className="d-flex items-center gap-3">
@@ -44,7 +44,7 @@ const Keywords = () => {
                       height="24px"
                       className="mobile-only arrow"
                     >
-                      <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
+                      <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path>
                     </svg>
                   </label>
                   <div className="accordion accordion-m">

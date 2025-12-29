@@ -20,13 +20,16 @@ const Cities = () => {
         <div className="d-flex flex-wrap mt-5 gap-2">
           {cities
             ?.sort((a, b) => a.volume - b.volume)
-            ?.map((e, i) => {
-              return (
-                <a className="btx-no" key={i} href={`/${e?.slug}/`}>
-                  {e?.name}
-                </a>
-              );
-            })}
+            ?.map((e, i) => (
+              <a
+                className="btx-no"
+                key={i}
+                href={`/${e?.slug}/`}
+                style={{ margin: 0 }}
+              >
+                {e?.name}
+              </a>
+            ))}
         </div>
       </div>
     </section>

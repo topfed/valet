@@ -27,7 +27,7 @@ const KeywordFaq = () => {
                 type="checkbox"
                 id={`toggle-${i}`}
                 className="d-none"
-                defaultChecked
+                defaultChecked={i === 0}
               />
               <label
                 htmlFor={`toggle-${i}`}
@@ -35,7 +35,7 @@ const KeywordFaq = () => {
               >
                 <h4 className="m-0 pr-5">{e?.title}</h4>
                 <svg width="24px" height="24px" className="arrow">
-                  <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
+                  <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path>
                 </svg>
               </label>
               <div className="accordion">

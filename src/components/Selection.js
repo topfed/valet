@@ -9,8 +9,25 @@ const Selection = () => {
   );
   return (
     <section className="bg-white">
-      <div className="container cont-space">
-        <p className="subtitle">{options?.subTitle}</p>
+      <div
+        className={`container ${
+          context?.slug === "selection-process" ? "no-space" : "cont-space"
+        }`}
+      >
+        {context?.slug === "selection-process" && (
+          <div className="d-flex text-12 mb-4 gap-2 italic">
+            <ul className="d-flex gap-2">
+              <li>
+                <a href={`/`}>Home</a>
+              </li>
+              <li>/</li>
+              <li>{options?.title}</li>
+            </ul>
+          </div>
+        )}
+        {context?.slug !== "selection-process" && (
+          <p className="subtitle">{options?.subTitle}</p>
+        )}
         <h2>{options?.title}</h2>
         {options?.content?.split("###")[0] && (
           <p>{options?.content?.split("###")[0]}</p>
@@ -29,7 +46,7 @@ const Selection = () => {
                     height={e?.icon?.height}
                   />
                 </div>
-                <div className="d-flex flex-col pl-3">
+                <div className="d-flex flex-col pl-4">
                   <h3>{e?.title}</h3>
                   <p dangerouslySetInnerHTML={{ __html: e?.content }} />
                 </div>

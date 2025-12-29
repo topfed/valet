@@ -14,8 +14,17 @@ const CityKeywords = () => {
   const keywords = slugData?.filter((e) => e?.type === "keyword");
   return (
     <section className="bg-white">
-      <div className="container cont-space">
-        <p className="subtitle">{options?.subTitle}</p>
+      <div className="container no-space">
+        <div className="d-flex text-12 mb-4 gap-2 italic">
+          <ul className="d-flex gap-2">
+            <li>
+              <a href={`/`}>Home</a>
+            </li>
+            <li>/</li>
+            <li>{single?.name}</li>
+          </ul>
+        </div>
+        {/* <p className="subtitle">{options?.subTitle}</p> */}
         <h2>{options?.title.replace("###", single?.name)}</h2>
         {single?.content?.split("###")[0] && (
           <p>{single?.content?.split("###")[0]}</p>
@@ -23,7 +32,7 @@ const CityKeywords = () => {
         {single?.content?.split("###")[1] && (
           <p>{single?.content?.split("###")[1]}</p>
         )}
-        <div className="d-grid grid-3 gap-4 mt-5">
+        <div className="d-grid grid-3-1 gap-4 mt-5">
           {list
             ?.sort((a, b) => a.volume - b.volume)
             ?.map((e, i) => {
@@ -37,15 +46,19 @@ const CityKeywords = () => {
                   />
                   <label
                     htmlFor={`toggle-${i}`}
-                    className="d-flex justify-between items-center gap-3 p-3 h-32"
+                    className="d-flex justify-between items-center gap-3 p-3"
                     aria-label={e?.name}
                   >
                     <div className="d-flex items-center gap-3">
                       <Svg name={e?.slug} width="32px" height="32px" />
                       <h3 className="m-0 pr-3">{e?.name}</h3>
                     </div>
-                    <svg width="24px" height="24px" className="mobile-only">
-                      <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
+                    <svg
+                      width="24px"
+                      height="24px"
+                      className="mobile-only arrow"
+                    >
+                      <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path>
                     </svg>
                   </label>
 

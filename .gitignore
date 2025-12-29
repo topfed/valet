@@ -1,0 +1,8 @@
+node_modules/
+functionsLess/
+.cache/
+public
+functionsSave
+src/gatsby-types.d.ts
+.env.development
+.env.production

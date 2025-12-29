@@ -18,7 +18,7 @@ const Posts = () => {
         {options?.content?.split("###")[1] && (
           <p>{options?.content?.split("###")[1]}</p>
         )}
-        <div className="d-grid grid-3 gap-4 mt-5">
+        <div className="d-grid grid-3-1 gap-4 mt-5">
           {posts?.map((e, i) => {
             return (
               <div className="box-border" key={i}>

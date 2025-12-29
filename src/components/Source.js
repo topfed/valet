@@ -1,5 +1,6 @@
 import React from "react";
 import { useGlobal } from "../data/useContext";
+import { withPrefix } from "gatsby";
 import Image from "./Sections/Image";
 
 const Source = () => {
@@ -31,7 +32,17 @@ const Source = () => {
                   rel="noopener noreferrer"
                   aria-label={e?.alt}
                 >
-                  <Image data={e?.img} />
+                  <Image
+                    data={{
+                      src: withPrefix(`/source/${e?.img?.src}`),
+                      width: `140px`,
+                      height: "auto",
+                      alt: `${e?.name}`,
+                      loading: "lazy",
+                      fetchpriority: "low",
+                      local: true,
+                    }}
+                  />
                 </a>
               </div>
             );

@@ -29,39 +29,37 @@ const Places = () => {
 
   return (
     <section className="bg-white">
-      <div className="container cont-space">
-        <p className="d-flex justify-center gap-1 items-center">
-          <a
-            href={`/${category?.slug}/`}
-            className="inColor underline text-center"
-          >
-            {category?.name}
-          </a>
-          <svg width="32px" height="20px">
-            <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
-          </svg>
-          <a
-            href={`/${keyword?.slug}/`}
-            className="inColor underline text-center"
-          >
-            {keyword?.name}
-          </a>
-          <svg width="32px" height="20px">
-            <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
-          </svg>
-          <a href={`/${city?.slug}/`} className="inColor underline text-center">
-            {city?.name}
-          </a>
-        </p>
-        <h2 className="text-center">
+      <div className="container no-space">
+        <div className="d-flex text-12 mb-4 gap-2 italic">
+          <div className="d-flex flex-wrap gap-2">
+            <span>
+              <a href={`/`}>Home</a>
+            </span>
+            <span>/</span>
+            <span>
+              <a href={`/${category?.slug}/`} className="text-center">
+                {category?.name}
+              </a>
+            </span>
+            <span>/</span>
+            <span>
+              <a href={`/${city?.slug}/`} className="text-center">
+                {city?.name}
+              </a>
+            </span>
+            <span>/</span>
+            <span>{keyword?.name}</span>
+          </div>
+        </div>
+        <h2>
           {option?.title
             ?.replace("###", keyword?.name)
             ?.replace("##", context?.places?.length)}
         </h2>
-        <div className="italic text-center mb-3 text-14">
+        <div className="italic mb-3 text-14">
           {`Updated ${dayjs(context?.update).fromNow()}`}
         </div>
-        <div className="d-flex justify-center items-center mt-2 mb-2 icon">
+        <div className="d-flex items-center mt-2 mb-2 icon">
           <a
             href="https://www.experian.co.uk/business/"
             title="Experian"
@@ -137,7 +135,7 @@ const Places = () => {
             <Svg name="source9" width="24px" height="17px" />
           </a>
         </div>
-        <ul className="d-flex justify-center flex-wrap gap-2">
+        <ul className="d-flex flex-wrap gap-2 pv-3">
           <li className="d-flex gap-1">
             <svg aria-hidden="true" viewBox="0 0 24 24" width="20px">
               <path
@@ -184,20 +182,20 @@ const Places = () => {
             {option?.checkTitle5}
           </li>
         </ul>
-        <div className="d-flex justify-center gap-1 italic m-2">
-          {option?.lernText}
-          <a href={option?.lernLink} className="mb-2 inColor underline">
-            {option?.lernLinkText}
-          </a>
-          .
-        </div>
-        <p className="text-center mb-4">
+        <p className="mb-2">
           {option?.content
             ?.replace("###", keyword?.name?.toLowerCase())
             ?.replace("###", keyword?.name?.toLowerCase())
             ?.replace("##", city?.name)
             ?.replace("##", city?.name)}
         </p>
+        <div className="d-flex gap-1 italic pv-2 mb-3">
+          {option?.lernText}
+          <a href={option?.lernLink} className="mb-2 inColor underline">
+            {option?.lernLinkText}
+          </a>
+          .
+        </div>
         {context?.places?.map((e, i) => {
           const uniqueLinks = Array.from(
             new Map(
@@ -207,6 +205,7 @@ const Places = () => {
               })
             ).values()
           );
+          const accId = `acc-${i}`;
           const placeDesc = productDescription(e?.content);
           return (
             <div className="box-border mb-4" key={i}>
@@ -236,7 +235,7 @@ const Places = () => {
               <div className="d-flex">
                 <ul className="d-flex gap-3">
                   <li className="d-flex items-center gap-2 mt-2">
-                    <Svg name="location" width="24px" height="24px" />
+                    <Svg name="location2" width="24px" height="24px" />
                     <a
                       href={e?.social.find((link) => link.includes("google"))}
                       target="_blank"
@@ -276,31 +275,49 @@ const Places = () => {
                 <strong>{option?.clientSay}</strong>
                 {e?.clientsSay}
               </div>
-              {placeDesc[0] && <p>{placeDesc[0]}</p>}
-              {placeDesc[1] && <p>{placeDesc[1]}</p>}
-              {placeDesc[2] && <p>{placeDesc[2]}</p>}
-              <div className="d-flex gap-2 mb-2 items-center flex-wrap text-14">
-                {option?.sourceTitle}
-                {uniqueLinks.map((link, i) => {
-                  const domain = new URL(link).hostname
-                    .replace(/^www\./, "")
-                    .split(".")[0];
-                  const label =
-                    domain.charAt(0).toUpperCase() + domain.slice(1);
-                  return (
-                    <a
-                      key={i}
-                      href={link}
-                      title={label}
-                      className="mr8 italic inColor underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {label}
-                      {i < uniqueLinks.length - 1 ? "," : ""}
-                    </a>
-                  );
-                })}
+
+              <input type="checkbox" id={accId} className="d-none acc" />
+
+              {/* Always visible: first paragraph */}
+              {placeDesc[0] && (
+                <p className="show-more">
+                  {placeDesc[0]}
+                  {` `}
+                  <label htmlFor={accId} className="cursor-link underline">
+                    show more
+                  </label>
+                </p>
+              )}
+
+              {/* Hidden until checkbox checked */}
+              <div className="pag">
+                {placeDesc[1] && <p>{placeDesc[1]}</p>}
+                {placeDesc[2] && <p>{placeDesc[2]}</p>}
+
+                <div className="d-flex gap-2 mb-2 items-center flex-wrap text-14">
+                  {option?.sourceTitle}
+                  {uniqueLinks.map((link, ii) => {
+                    const domain = new URL(link).hostname
+                      .replace(/^www\./, "")
+                      .split(".")[0];
+                    const label =
+                      domain.charAt(0).toUpperCase() + domain.slice(1);
+
+                    return (
+                      <a
+                        key={ii}
+                        href={link}
+                        title={label}
+                        className="mr8 italic inColor underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {label}
+                        {ii < uniqueLinks.length - 1 ? "," : ""}
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           );
