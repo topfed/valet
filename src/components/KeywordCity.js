@@ -15,7 +15,7 @@ const KeywordCity = () => {
   const content = single.content.replace("###", single.name.toLowerCase());
 
   const [first, second] = splitParagraph(content);
-  console.log(single);
+  // console.log(single);
   return (
     <section className="bg-light">
       <div className="container no-space">
