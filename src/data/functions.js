@@ -72,3 +72,19 @@ export const slugToTitle = (text) => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 };
+
+export const formatUpdatedDate = (value) => {
+  if (!value) return "";
+
+  const date =
+    value?.toDate?.() ??
+    (typeof value === "number" ? new Date(value) : new Date(value));
+
+  if (isNaN(date.getTime())) return "";
+
+  return `Updated ${date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  })}`;
+};

@@ -1,6 +1,6 @@
 import React from "react";
 import { useGlobal } from "../data/useContext";
-import { productDescription } from "../data/functions";
+import { productDescription, formatUpdatedDate } from "../data/functions";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "./Sections/Image";
@@ -50,8 +50,8 @@ const Places = () => {
       <section className="relative w-100 h-600 overflow-hidden">
         <Image
           data={{
-            src: withPrefix(`/images/business.webp`),
-            srcm: withPrefix(`/images/heroMobile.webp`),
+            src: withPrefix(`/keywords/${keyword?.slug}-landscape.webp`),
+            srcm: withPrefix(`/keywords/${keyword?.slug}-square-min.webp`),
             alt: `${option?.imgAlt}`,
             loading: "eager",
             fetchpriority: "high",
@@ -79,7 +79,7 @@ const Places = () => {
       </section>
 
       <section className="bg-white">
-        <div className="container no-space">
+        <div className="container cont-space">
           <div className="d-flex text-12 mb-4 gap-2 italic">
             <div className="d-flex flex-wrap gap-2">
               <span>
@@ -109,7 +109,7 @@ const Places = () => {
               ?.replace("##", context?.places?.length)}
           </h2>
           <div className="italic mb-3 text-14">
-            {`Updated ${dayjs(context?.update).fromNow()}`}
+            {formatUpdatedDate(context?.update)}
           </div>
           <div className="d-flex items-center mt-2 mb-2 icon">
             <a

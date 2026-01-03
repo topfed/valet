@@ -268,13 +268,6 @@ const Footer = () => {
                   </svg>
                 </div>
               </div>
-              <p id="searchMeta" className="text-12 mt-2 mb-1 text-center"></p>
-              <div id="menu" className="p-3"></div>
-              <ul
-                id="searchResults"
-                className="p-3 m-0 overflow-scrollY"
-                style={{ listStyle: "none", display: "none" }}
-              />
             </div>
           </div>
         </div>

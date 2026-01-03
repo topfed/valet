@@ -1139,6 +1139,10 @@ input[type="checkbox"]:checked ~ .accordion {
 label .arrow.pos-initial {
   position: initial;
 }
+#searchResults li {
+  padding: 8px;
+  margin-left: 8px;
+}
 @keyframes fadeSwap {
   0% {
     opacity: 0;

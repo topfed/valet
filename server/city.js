@@ -1,4 +1,9 @@
-const admin = require("firebase-admin");
+import fs from "node:fs/promises";
+import path from "node:path";
+import crypto from "node:crypto";
+import sharp from "sharp";
+import OpenAI from "openai";
+import admin from "firebase-admin";
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -16,19 +21,132 @@ if (!admin.apps.length) {
 }
 const db = admin.firestore();
 
+async function generateResponsiveImages({
+  prompt,
+  outDir = "static",
+  baseName,
+  quality = 80,
+  apiKey = `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`,
+  variants = [
+    { key: "square-min", width: 640, height: 640, source: "square" },
+    { key: "landscape", width: 1200, height: 630, source: "landscape" },
+    { key: "square", width: 1080, height: 1080, source: "square" },
+  ],
+} = {}) {
+  if (!apiKey)
+    throw new Error(
+      "Missing OpenAI API key. Set OPENAI_API_KEY or pass apiKey."
+    );
+  if (!prompt || typeof prompt !== "string")
+    throw new Error("prompt is required and must be a string");
+  if (typeof quality !== "number" || quality < 1 || quality > 100) {
+    throw new Error("quality must be a number between 1 and 100");
+  }
+
+  const openai = new OpenAI({ apiKey });
+
+  const absOutDir = path.resolve(process.cwd(), outDir);
+  await fs.mkdir(absOutDir, { recursive: true });
+
+  const id =
+    (baseName && String(baseName).trim()) ||
+    crypto
+      .createHash("sha1")
+      .update(prompt + "|" + Date.now())
+      .digest("hex")
+      .slice(0, 12);
+
+  // Internal helper (kept INSIDE the function)
+  const generateB64 = async (size) => {
+    const res = await openai.images.generate({
+      model: "gpt-image-1",
+      prompt,
+      size, // "1024x1024" | "1536x1024" | "1024x1536"
+    });
+    const b64 = res?.data?.[0]?.b64_json;
+    if (!b64) throw new Error(`No image returned from OpenAI for size ${size}`);
+    return b64;
+  };
+
+  // 1) Generate masters (one per aspect ratio)
+  const [squareB64, landscapeB64, portraitB64] = await Promise.all([
+    generateB64("1024x1024"), // square master
+    generateB64("1536x1024"), // landscape master
+  ]);
+
+  const masters = {
+    square: Buffer.from(squareB64, "base64"),
+    landscape: Buffer.from(landscapeB64, "base64"),
+  };
+
+  // 2) Produce variants (all WEBP @ quality)
+  const files = {};
+  await Promise.all(
+    variants.map(async (v) => {
+      const src = masters[v.source] || masters.square;
+      const outPath = path.join(absOutDir, `${id}-${v.key}.webp`);
+
+      await sharp(src)
+        .resize(v.width, v.height, {
+          fit: "cover",
+          position: "attention",
+        })
+        .webp({ quality })
+        .toFile(outPath);
+
+      files[v.key] = outPath;
+    })
+  );
+
+  return {
+    id,
+    outDir: absOutDir,
+    quality,
+    variants,
+    files, // { mobile: "...", tablet: "...", ... }
+  };
+}
+
 async function firebaseAddData() {
   const snapshot = await db
     .collection("S_pages")
-    .where("type", "==", "city")
+    .where("type", "==", "keyword")
     .get();
   let c = 0;
   console.log("✅ List Cities");
   for (const doc of snapshot.docs) {
     c++;
+    if (c < 330) continue;
     const data = doc.data();
+    if (data?.category === null) continue;
     console.log(
       `${c} - ${data?.display} - ${data?.name} | ${data?.slug} | ${data?.volume}`
     );
+
+    //   const result = await generateResponsiveImages({
+    //     prompt: `Create a clean background photo for a city page: ${data?.name} UK.
+    // The image should contain no text or logos, only a memorable location in Bristol.
+    // Use an ultra-realistic photographic style.`,
+    //     outDir: "static/img",
+    //     baseName: data?.slug,
+    //     quality: 80,
+    //   });
+
+    const result = await generateResponsiveImages({
+      prompt: `Ultra-realistic documentary-style photograph of professionals performing ${data?.name} in a real working environment.
+Natural candid moment, not posed. Shot on a real camera, eye-level perspective.
+Imperfect lighting, natural shadows, slight motion blur, realistic skin texture.
+Real workplace details: tools in use, worn surfaces, cables, desks, paperwork, or equipment relevant to ${data?.name}.
+Authentic human interaction and focus, no exaggerated expressions.
+No text, no logos, no watermarks, no illustrations, no sexual, no CGI, no studio lighting, no stock-photo look.
+Looks like a real photo taken on location.`,
+      outDir: "static/keywords",
+      baseName: data?.slug,
+      quality: 80,
+    });
+
+    console.log(result.files);
+
     // console.dir(data, {
     //   depth: null,
     //   colors: true,

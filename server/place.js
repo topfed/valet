@@ -18,28 +18,29 @@ const db = admin.firestore();
 
 async function firebaseAddData() {
   const snapshot = await db.collection("S_places").get();
+  console.log(`✅ List Places: ${snapshot.size} docs`);
+
+  const bw = db.bulkWriter();
   let c = 0;
-  console.log("✅ List Places");
+
   for (const doc of snapshot.docs) {
     c++;
     const data = doc.data();
+
     console.log(
-      `${c} - ${doc?.id} - ${data?.places?.length} Places | ${
-        data?.places?.filter((e) => e?.status === 3)?.length
+      `${c} - ${doc.id} - ${data?.places?.length || 0} Places | ${
+        data?.places?.filter?.((e) => e?.status === 3)?.length || 0
       } Featured | ${
-        data?.places?.filter((e) => e?.status === 2)?.length
-      } Published `
+        data?.places?.filter?.((e) => e?.status === 2)?.length || 0
+      } Published`
     );
-    // console.dir(data, {
-    //   depth: null,
-    //   colors: true,
-    //   maxArrayLength: null,
-    // });
-    // console.log(settings);
-    // await db.collection("S_places").doc(doc.id).update({
-    //   settings: settings,
-    // });
+
+    bw.update(doc.ref, {
+      update: admin.firestore.FieldValue.serverTimestamp(),
+    });
   }
+
+  await bw.close();
 }
 
 firebaseAddData()
@@ -48,6 +49,4 @@ firebaseAddData()
       "===================================================================================="
     )
   )
-  .catch((error) =>
-    console.error("Error processing Documents:", error.message)
-  );
+  .catch((error) => console.error("Error processing Documents:", error));

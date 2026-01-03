@@ -45,8 +45,8 @@ const CategoryPlacesKeywords = () => {
       <section className="relative w-100 h-600 overflow-hidden">
         <Image
           data={{
-            src: withPrefix(`/images/business.webp`),
-            srcm: withPrefix(`/images/heroMobile.webp`),
+            src: withPrefix(`/cities/${city?.slug}-landscape.webp`),
+            srcm: withPrefix(`/cities/${city?.slug}-square-min.webp`),
             alt: `${options?.imgAlt}`,
             loading: "eager",
             fetchpriority: "high",
@@ -78,7 +78,7 @@ const CategoryPlacesKeywords = () => {
       </section>
 
       <section className="bg-white">
-        <div className="container no-space">
+        <div className="container cont-space">
           <div className="d-flex text-12 mb-4 gap-2 italic">
             <ul className="d-flex gap-2">
               <li>

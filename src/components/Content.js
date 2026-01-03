@@ -11,7 +11,7 @@ const Content = () => {
     <section className="bg-white">
       <div
         className={`container ${
-          context?.slug === "faq" ? "no-space-b" : "no-space"
+          context?.slug === "faq" ? "no-space-b" : "cont-space"
         }`}
       >
         <div className="d-flex text-12 mb-4 gap-2 italic">
