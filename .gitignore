@@ -2,6 +2,7 @@ node_modules/
 functionsLess/
 .cache/
 public
+panel
 functionsSave
 src/gatsby-types.d.ts
 .env.development
