@@ -18,11 +18,11 @@ const CategoryPlacesKeywords = () => {
   const keywords = slugData?.filter(
     (e) => e?.category === context?.category && e?.type === "keyword"
   );
-  console.log(settings, context?.type);
+  // console.log(settings, context?.type);
   const optionsCategoryPlace = (settings[context?.type] || [])?.find(
     (e) => e?.id === "CategoryPlace"
   );
-  console.log(optionsCategoryPlace);
+  // console.log(optionsCategoryPlace);
   const type = context?.type || "index";
   const slug = context?.slug || "/";
   const categoryPlaceData = {};
@@ -39,7 +39,7 @@ const CategoryPlacesKeywords = () => {
       ?.replace("###", categoryPlaceData?.category?.name)
       ?.replace("##", categoryPlaceData?.city?.name);
   }
-  console.log(categoryPlaceData);
+  // console.log(categoryPlaceData);
   return (
     <>
       <section className="relative w-100 h-600 overflow-hidden">
@@ -57,23 +57,23 @@ const CategoryPlacesKeywords = () => {
         <div className="h-600 absolute w-100 bg-dark opacity-60"></div>
         <div className="d-flex relative flex-col justify-center items-center h-600 w-90 text-center m-c">
           <h1
-            className="light p-0 fade-in delay-500"
+            className="light p-0 fade-in"
             dangerouslySetInnerHTML={{
               __html: categoryPlaceData?.title,
             }}
           />
-          <p className="light font-300 mb-5 fade-in delay-750">
+          <p className="light font-300 mb-5 fade-in delay-500">
             {categoryPlaceData?.subTitle}
           </p>
 
-          <label
+          {/* <label
             htmlFor="request-toggle"
             role="button"
             aria-label="Request a Quote"
-            className="btx d-flex items-center gap-2 cursor-link fade-in delay-1000"
+            className="btx d-flex items-center gap-2 cursor-link fade-in delay-750"
           >
             Request a Quote
-          </label>
+          </label> */}
         </div>
       </section>
 

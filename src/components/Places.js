@@ -5,14 +5,9 @@ import {
   formatUpdatedDate,
   facebookImage,
 } from "../data/functions";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "./Sections/Image";
 import { withPrefix } from "gatsby";
 import Svg from "./Svg";
-dayjs.extend(relativeTime);
-
-// import Image from "./Sections/Image";
 
 const Places = () => {
   const { settings, context, slugData } = useGlobal();
@@ -49,7 +44,7 @@ const Places = () => {
       ?.replace("##", placeData?.city?.name);
   }
 
-  console.log(context);
+  // console.log(context);
 
   return (
     <>
@@ -68,19 +63,22 @@ const Places = () => {
         <div className="h-600 absolute w-100 bg-dark opacity-60"></div>
         <div className="d-flex relative flex-col justify-center items-center h-600 w-90 text-center m-c">
           <h1
-            className="light p-0 fade-in delay-500"
+            className="light p-0 fade-in"
             dangerouslySetInnerHTML={{
               __html: placeData?.title,
             }}
           />
-          <label
+          {/* <label
             htmlFor="request-toggle"
             role="button"
             aria-label="Request a Quote"
-            className="btx d-flex items-center gap-2 cursor-link mt-3 fade-in delay-1000"
+            className="btx d-flex items-center gap-2 cursor-link mt-1 fade-in delay-500"
           >
             Request a Quote
-          </label>
+          </label> */}
+          {/* <div className="italic mt-4 text-white text-14 fade-in delay-750">
+            {formatUpdatedDate(context?.update)}
+          </div> */}
         </div>
       </section>
 
@@ -114,10 +112,7 @@ const Places = () => {
               ?.replace("###", keyword?.name)
               ?.replace("##", context?.places?.length)}
           </h2>
-          <div className="italic mb-3 text-14">
-            {formatUpdatedDate(context?.update)}
-          </div>
-          <div className="d-flex items-center mt-2 mb-2 icon">
+          <div className="d-flex items-center mt-4 mb-2 icon">
             <a
               href="https://www.experian.co.uk/business/"
               title="Experian"
@@ -274,18 +269,30 @@ const Places = () => {
             return (
               <div className="box-border mb-4" key={i}>
                 <div className="d-flex gap-3 mb-3">
-                  <div className="w-60 h-60 overflow-hidden rounded-full border-dash">
+                  <div className="w-60 h-60 overflow-hidden rounded-full border-dash img-wrap">
                     <img
-                      src={fbImage || e?.image}
+                      src={fbImage || e?.image || "default.jpg"}
+                      alt={e?.title}
                       loading="lazy"
                       decoding="async"
-                      alt={e?.title}
-                      className="object-cover w-100 h-100"
                       referrerPolicy="no-referrer"
+                      className="object-cover w-100 h-100"
+                      data-src-main={e?.image}
+                      data-src-default="/default.jpg"
                       onError={(ev) => {
-                        if (ev.currentTarget.src !== e?.image) {
-                          ev.currentTarget.src = e?.image;
+                        const img = ev.currentTarget;
+                        if (!img.dataset.mainTried && img.dataset.srcMain) {
+                          img.dataset.mainTried = "1";
+                          img.src = img.dataset.srcMain;
+                          return;
                         }
+                        if (!img.dataset.defaultTried) {
+                          img.dataset.defaultTried = "1";
+                          img.src = img.dataset.srcDefault;
+                          return;
+                        }
+                        const wrap = img.closest(".img-wrap");
+                        if (wrap) wrap.style.display = "none";
                       }}
                     />
                   </div>
@@ -392,7 +399,7 @@ const Places = () => {
           </div>
         </div>
       </section>
-      <section className="bg-dark">
+      {/* <section className="bg-dark">
         <div className="container cont-space">
           <div className="d-flex flex-col justify-center items-center text-center">
             <h2 className="text-white">Request a Quote with Confidence</h2>
@@ -405,13 +412,13 @@ const Places = () => {
               htmlFor="request-toggle"
               role="button"
               aria-label="Request a Quote"
-              className="btx d-flex items-center gap-2 cursor-link mt-3 fade-in delay-1000"
+              className="btx d-flex items-center gap-2 cursor-link mt-3"
             >
               Request a Quote
             </label>
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };

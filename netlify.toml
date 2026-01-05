@@ -1,3 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "public"
+
+[[scheduled]]
+  cron = "0 10 * * 1"
+  branch = "main"
+
 [functions]
   directory = "src/api"
 

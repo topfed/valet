@@ -7,7 +7,7 @@ const Content = () => {
   const options = (settings[context?.type] || [])?.find(
     (e) => e?.id === "Content"
   );
-  console.log(data);
+  // console.log(data);
   return (
     <section className="bg-white">
       <div

@@ -47,7 +47,7 @@ const Hero = () => {
           {options?.shortContent}
         </p>
 
-        {options?.displayButton && (
+        {/* {options?.displayButton && (
           <label
             htmlFor="request-toggle"
             role="button"
@@ -56,7 +56,7 @@ const Hero = () => {
           >
             {options?.buttonText}
           </label>
-        )}
+        )} */}
       </div>
     </section>
   );

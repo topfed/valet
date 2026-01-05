@@ -12,7 +12,7 @@ const CityCities = () => {
   const list = slugData?.filter(
     (e) => e?.slug !== context?.slug && e?.type === "city"
   );
-  console.log(single);
+  // console.log(single);
   return (
     <section className="bg-light">
       <div className="container cont-space">

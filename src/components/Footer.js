@@ -200,7 +200,7 @@ const Footer = () => {
                   </svg>
                 </div>
               </div>
-              <p id="searchMeta" className="text-12 mt-2 mb-1 text-center"></p>
+              {/* <p id="searchMeta" className="text-12 mt-2 mb-1 text-center"></p> */}
               <div id="menu" className="p-3"></div>
               <ul
                 id="searchResults"

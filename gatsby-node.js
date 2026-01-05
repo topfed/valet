@@ -29,18 +29,16 @@ exports.sourceNodes = async ({
       count: data?.places?.length,
     };
   });
-  const groupedByCity = placesSort
-    ?.filter((a) => a.count > 5)
-    ?.reduce((acc, item) => {
-      const parts = item.id.split("-");
-      const city = parts.pop();
-      const service = parts.join("-");
-      if (!acc[city]) {
-        acc[city] = [];
-      }
-      acc[city].push(service);
-      return acc;
-    }, {});
+  const groupedByCity = placesSort?.reduce((acc, item) => {
+    const parts = item.id.split("-");
+    const city = parts.pop();
+    const service = parts.join("-");
+    if (!acc[city]) {
+      acc[city] = [];
+    }
+    acc[city].push(service);
+    return acc;
+  }, {});
   const collections = process.env.COLLECTIONS_NODE.split(",");
   for (const collection of collections) {
     try {
@@ -143,28 +141,65 @@ exports.createPages = async ({ graphql, actions }) => {
     })
     .sort((a, b) => b.count - a.count);
   let c = 0;
+
+  function getRandomCount(n) {
+    const map = {
+      3: 2,
+      4: 3,
+      5: 4,
+      6: 4,
+      7: 5,
+      8: 6,
+      9: 7,
+      10: 7,
+      11: 8,
+      12: 9,
+      13: 10,
+      14: 10,
+      15: 11,
+      16: 12,
+      17: 13,
+      18: 14,
+      19: 15,
+      20: 15,
+    };
+
+    if (n <= 2) return n; // show all if 0,1,2
+    if (n >= 20) return map[20]; // cap rule at 20 -> 15
+    return map[n] ?? Math.min(n, 15); // fallback safety
+  }
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
   for (const doc of placesSort) {
     c++;
-    if (doc?.count > 5) {
-      const parts = doc.id.split("-");
-      const city = parts.pop();
-      const service = parts.join("-");
-      createPage({
-        path: `/${service}/${city}/`,
-        component: template,
-        context: {
-          keyword: service,
-          city: city,
-          type: "place",
-          update: Date.now(),
-          places:
-            [
-              ...doc?.places?.filter((e) => e?.status === 3),
-              ...doc?.places?.filter((e) => e?.status === 2),
-            ] || [],
-        },
-      });
-    }
+    const parts = doc.id.split("-");
+    const city = parts.pop();
+    const service = parts.join("-");
+    const featured = (doc?.places || []).filter((e) => e?.status === 3);
+    const normalAll = (doc?.places || []).filter((e) => e?.status === 2);
+    const take = getRandomCount(normalAll.length);
+    const normalRandom = shuffle(normalAll).slice(0, take);
+    const placesFinal = [...featured, ...normalRandom].slice(0, 20);
+
+    createPage({
+      path: `/${service}/${city}/`,
+      component: template,
+      context: {
+        keyword: service,
+        city,
+        type: "place",
+        update: Date.now(),
+        places: placesFinal,
+      },
+    });
   }
 };
 

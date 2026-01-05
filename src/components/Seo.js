@@ -6,12 +6,11 @@ const Seo = ({ data, context }) => {
   const slugData = data?.slugData?.find((e) => e?.slug === slug);
   const siteName = process.env.NAME;
   const language = process.env.LANGUAGE;
-  const logoUrl = `${process.env.PUBLIC_URL}/logo.png`;
+  let logoUrl = `${process.env.PUBLIC_URL}/logo.png`;
   let placeData = {};
   let categoryPlaceData = {};
   let ogUrl = process.env.PUBLIC_URL;
   let pageSchema = null;
-
   if (type === "categoryPlace") {
     const optionsCategoryPlace = (data?.settings[context?.type] || [])?.find(
       (e) => e?.id === "CategoryPlace"
@@ -56,6 +55,7 @@ const Seo = ({ data, context }) => {
       ?.replace("###", placeData?.keyword?.name?.toLowerCase())
       ?.replace("##", placeData?.city?.name)
       ?.replace("#", placeData?.keyword?.single?.toLowerCase());
+    logoUrl = `${process.env.PUBLIC_URL}/keywords/${context?.keyword}-landscape.webp`;
   }
 
   const title =
@@ -76,7 +76,7 @@ const Seo = ({ data, context }) => {
     },
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+44-20-3807-8434",
+      telephone: "+1 (720) 312 7878",
       email: "info@trustvalet.co.uk",
       contactType: "Customer Support",
       areaServed: "GB",
@@ -179,6 +179,7 @@ const Seo = ({ data, context }) => {
       publisher: publisher,
       inLanguage: language,
     };
+    logoUrl = `${process.env.PUBLIC_URL}/keywords/${context?.slug}-landscape.webp`;
   }
   if (type === "city") {
     ogUrl = `${ogUrl}/${context?.slug}/`;
@@ -221,6 +222,7 @@ const Seo = ({ data, context }) => {
       publisher: publisher,
       inLanguage: language,
     };
+    logoUrl = `${process.env.PUBLIC_URL}/cities/${context?.slug}-landscape.webp`;
   }
   if (type === "categoryPlace") {
     ogUrl = `${ogUrl}/${categoryPlaceData?.category?.slug}/${categoryPlaceData?.city?.slug}/`;
@@ -273,6 +275,7 @@ const Seo = ({ data, context }) => {
       publisher: publisher,
       inLanguage: language,
     };
+    logoUrl = `${process.env.PUBLIC_URL}/cities/${categoryPlaceData?.city?.slug}-landscape.webp`;
   }
   if (type === "place") {
     ogUrl = `${ogUrl}/${placeData?.keyword?.slug}/${placeData?.city?.slug}/`;
@@ -332,6 +335,7 @@ const Seo = ({ data, context }) => {
       inLanguage: language,
     };
   }
+  console.log(pageSchema);
   return (
     <>
       <html lang={language} />
