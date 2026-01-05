@@ -204,7 +204,7 @@ const Footer = () => {
               <div id="menu" className="p-3"></div>
               <ul
                 id="searchResults"
-                className="p-3 m-0 overflow-scrollY"
+                className="ph-3 m-0 overflow-scrollY"
                 style={{ listStyle: "none", display: "none" }}
               />
             </div>

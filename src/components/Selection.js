@@ -12,7 +12,7 @@ const Selection = () => {
     <section className="bg-white">
       <div
         className={`container ${
-          context?.slug === "selection-process" ? "no-space" : "cont-space"
+          context?.slug === "selection-process" ? "cont-space" : "cont-space"
         }`}
       >
         {context?.slug === "selection-process" && (
