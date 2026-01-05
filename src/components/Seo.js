@@ -335,7 +335,7 @@ const Seo = ({ data, context }) => {
       inLanguage: language,
     };
   }
-  console.log(pageSchema);
+  // console.log(pageSchema);
   return (
     <>
       <html lang={language} />
