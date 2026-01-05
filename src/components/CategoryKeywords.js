@@ -65,7 +65,6 @@ const CategoryKeywords = () => {
               <li>{single?.name}</li>
             </ul>
           </div>
-          {/* <p className="subtitle">{options?.subTitle}</p> */}
           <h2>{options?.title?.replace("###", single?.name)}</h2>
           {single?.content?.split("###")[0] && (
             <p>{single?.content?.split("###")[0]}</p>

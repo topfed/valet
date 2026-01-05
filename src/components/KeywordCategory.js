@@ -22,7 +22,6 @@ const KeywordCategory = () => {
   return (
     <section className="bg-light">
       <div className="container cont-space">
-        <p className="subtitle">{options?.subTitle}</p>
         <h2>{options?.title?.replace("###", single?.name)}</h2>
         <p>{options?.content?.replace("###", single?.name?.toLowerCase())}</p>
         <div className="d-grid gap-4 mt-5">

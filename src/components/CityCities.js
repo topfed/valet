@@ -7,18 +7,18 @@ const CityCities = () => {
     (e) => e?.id === "CityCities"
   );
   const single = slugData?.find(
-    (e) => e?.slug === context?.slug && e?.type === "category"
+    (e) => e?.slug === context?.slug && e?.type === "city"
   );
   const list = slugData?.filter(
     (e) => e?.slug !== context?.slug && e?.type === "city"
   );
+  console.log(single);
   return (
     <section className="bg-light">
       <div className="container cont-space">
-        <p className="subtitle">{options?.subTitle}</p>
         <h2>{options?.title?.replace("###", single?.name)}</h2>
         {options?.content && (
-          <p>{options?.content.replace("###", single?.name.toLowerCase())}</p>
+          <p>{options?.content.replace("###", single?.name)}</p>
         )}
         <div className="d-flex flex-wrap mt-5 gap-2">
           {list

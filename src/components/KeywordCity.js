@@ -74,7 +74,6 @@ const KeywordCity = () => {
               <span>{single?.name}</span>
             </div>
           </div>
-          {/* <p className="subtitle">{options?.subTitle}</p> */}
           <h2>{options?.title?.replace("###", single?.name)}</h2>
           {first && <p>{first}</p>}
           {second && <p>{second}</p>}

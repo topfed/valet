@@ -88,3 +88,68 @@ export const formatUpdatedDate = (value) => {
     year: "numeric",
   })}`;
 };
+
+export const facebookImage = (social) => {
+  if (!Array.isArray(social)) return null;
+
+  // 1. Find a facebook link
+  const fbLink = social.find(
+    (u) => typeof u === "string" && /(facebook\.com|fb\.me)/i.test(u)
+  );
+
+  if (!fbLink) return null;
+
+  // 2. Safe URL parse
+  let url;
+  try {
+    url = new URL(fbLink.startsWith("http") ? fbLink : `https://${fbLink}`);
+  } catch {
+    return null;
+  }
+
+  // 3. profile.php?id=123
+  const idParam = url.searchParams.get("id");
+  if (idParam && /^\d+$/.test(idParam)) {
+    return `https://graph.facebook.com/${idParam}/picture?type=square&width=200&height=200`;
+  }
+
+  // 4. Path parsing
+  const parts = url.pathname
+    .split("/")
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  if (!parts.length) return null;
+
+  // pages/name/123 or people/name/123
+  if (
+    (parts[0] === "pages" || parts[0] === "people") &&
+    parts[2] &&
+    /^\d+$/.test(parts[2])
+  ) {
+    return `https://graph.facebook.com/${parts[2]}/picture?type=square&width=200&height=200`;
+  }
+
+  // pg/username
+  if (parts[0] === "pg" && parts[1]) {
+    return `https://graph.facebook.com/${parts[1]}/picture?type=square&width=200&height=200`;
+  }
+
+  // Normal username page
+  const handle = parts[0].replace(/^@/, "").replace(/\.+$/, "");
+
+  const blocked = new Set([
+    "home.php",
+    "watch",
+    "groups",
+    "events",
+    "marketplace",
+    "login",
+    "share",
+    "reel",
+  ]);
+
+  if (!handle || blocked.has(handle.toLowerCase())) return null;
+
+  return `https://graph.facebook.com/${handle}/picture?type=square&width=200&height=200`;
+};

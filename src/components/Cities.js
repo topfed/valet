@@ -9,7 +9,6 @@ const Cities = () => {
   return (
     <section className="bg-light">
       <div className="container cont-space">
-        <p className="subtitle">{options?.subTitle}</p>
         <h2>{options?.title}</h2>
         {options?.content?.split("###")[0] && (
           <p>{options?.content?.split("###")[0]}</p>
@@ -21,12 +20,7 @@ const Cities = () => {
           {cities
             ?.sort((a, b) => a.volume - b.volume)
             ?.map((e, i) => (
-              <a
-                className="btx-no"
-                key={i}
-                href={`/${e?.slug}/`}
-                style={{ margin: 0 }}
-              >
+              <a className="btx-no" key={i} href={`/${e?.slug}/`}>
                 {e?.name}
               </a>
             ))}

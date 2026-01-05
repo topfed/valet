@@ -10,7 +10,6 @@ const Keywords = () => {
   return (
     <section className="bg-white">
       <div className="container cont-space">
-        <p className="subtitle">{options?.subTitle}</p>
         <h2>{options?.title}</h2>
         {options?.content?.split("###")[0] && (
           <p>{options?.content?.split("###")[0]}</p>
@@ -66,7 +65,10 @@ const Keywords = () => {
                           );
                         })}
                     </ul>
-                    <a className="ph-3 mt-1 mb-3 block" href={`/${e?.slug}/`}>
+                    <a
+                      className="ph-3 mt-3 font-600 italic underline text-center mb-3 block"
+                      href={`/${e?.slug}/`}
+                    >
                       {options?.buttonText?.replace("###", e?.name)}
                     </a>
                   </div>

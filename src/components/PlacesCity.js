@@ -16,7 +16,6 @@ const PlacesCity = () => {
   return (
     <section className="bg-light">
       <div className="container cont-space">
-        <p className="subtitle">{option?.subTitle}</p>
         <h2>{option?.title?.replace("###", keyword?.name)}</h2>
         {option?.content && (
           <p>{option?.content.replace("###", keyword?.name.toLowerCase())}</p>

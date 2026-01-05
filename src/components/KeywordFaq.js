@@ -13,7 +13,6 @@ const KeywordFaq = () => {
   return (
     <section className="bg-white" id="faq">
       <div className="container cont-space">
-        <p className="subtitle">{options?.subTitle}</p>
         <h2>{options?.title?.replace("###", single?.name)}</h2>
         <p>
           {options?.content
@@ -22,7 +21,7 @@ const KeywordFaq = () => {
         </p>
         {single?.faq?.map((e, i) => {
           return (
-            <div className="box-border mb-3 p-0 bg-none mt-5" key={i}>
+            <div className="box-border mb-3 p-0 bg-none mt-3" key={i}>
               <input
                 type="checkbox"
                 id={`toggle-${i}`}

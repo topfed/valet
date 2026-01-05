@@ -1,6 +1,10 @@
 import React from "react";
 import { useGlobal } from "../data/useContext";
-import { productDescription, formatUpdatedDate } from "../data/functions";
+import {
+  productDescription,
+  formatUpdatedDate,
+  facebookImage,
+} from "../data/functions";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "./Sections/Image";
@@ -45,6 +49,8 @@ const Places = () => {
       ?.replace("##", placeData?.city?.name);
   }
 
+  console.log(context);
+
   return (
     <>
       <section className="relative w-100 h-600 overflow-hidden">
@@ -78,7 +84,7 @@ const Places = () => {
         </div>
       </section>
 
-      <section className="bg-white">
+      <section className="bg-white2">
         <div className="container cont-space">
           <div className="d-flex text-12 mb-4 gap-2 italic">
             <div className="d-flex flex-wrap gap-2">
@@ -241,61 +247,69 @@ const Places = () => {
               ?.replace("##", city?.name)
               ?.replace("##", city?.name)}
           </p>
-          <div className="d-flex gap-1 italic pv-2 mb-3">
+          <div className="d-flex italic pv-2 mb-3">
             {option?.lernText}
-            <a href={option?.lernLink} className="mb-2 inColor underline">
+            <a href={option?.lernLink} className="mb-2 pl-1 inColor underline">
               {option?.lernLinkText}
             </a>
-            .
           </div>
           {context?.places?.map((e, i) => {
             const uniqueLinks = Array.from(
               new Map(
-                e?.social.map((link) => {
-                  const domain = new URL(link).hostname.replace(/^www\./, "");
+                (e?.social || []).map((link) => {
+                  let domain = "source";
+                  try {
+                    domain = new URL(link).hostname.replace(/^www\./, "");
+                  } catch {}
                   return [domain, link];
                 })
               ).values()
             );
+
             const accId = `acc-${i}`;
             const placeDesc = productDescription(e?.content);
+
+            const fbImage = facebookImage(e?.social);
+
             return (
               <div className="box-border mb-4" key={i}>
                 <div className="d-flex gap-3 mb-3">
-                  {/* <img
-                  src={e?.image}
-                  loading="lazy"
-                  decoding="async"
-                  alt={e?.title}
-                  width="60px"
-                  height="60px"
-                  className="rounded-full"
-                /> */}
                   <div className="w-60 h-60 overflow-hidden rounded-full border-dash">
                     <img
-                      src={e?.image}
+                      src={fbImage || e?.image}
                       loading="lazy"
                       decoding="async"
                       alt={e?.title}
                       className="object-cover w-100 h-100"
+                      referrerPolicy="no-referrer"
+                      onError={(ev) => {
+                        if (ev.currentTarget.src !== e?.image) {
+                          ev.currentTarget.src = e?.image;
+                        }
+                      }}
                     />
                   </div>
+
                   <div className="d-flex items-center">
                     <h3>{e?.title}</h3>
                   </div>
                 </div>
+
                 <div className="d-flex">
                   <ul className="d-flex gap-3">
                     <li className="d-flex items-center gap-2 mt-2">
                       <Svg name="location2" width="24px" height="24px" />
                       <a
-                        href={e?.social.find((link) => link.includes("google"))}
+                        href={(e?.social || []).find((link) =>
+                          link.includes("google")
+                        )}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         {option?.metaTitle1}
                       </a>
                     </li>
+
                     <li className="d-flex items-center gap-2 mt-2">
                       <Svg name="website" width="24px" height="24px" />
                       <a
@@ -310,19 +324,14 @@ const Places = () => {
                     </li>
                   </ul>
                 </div>
-                {/* <h4>Service Highlights</h4>
-              <ul className="d-flex flex-wrap mt-2 gap-2">
-                <li className="btx-no">SEO</li>
-                <li className="btx-no">PPC</li>
-                <li className="btx-no">Web Design</li>
-                <li className="btx-no">Social Media</li>
-              </ul> */}
+
                 <h4 className="mb-3 mt-3">
                   {option?.whyChoose?.replace(
                     "###",
                     keyword?.single?.toLowerCase()
                   )}
                 </h4>
+
                 <div className="d-flex gap-2 mb-3">
                   <strong>{option?.clientSay}</strong>
                   {e?.clientsSay}
@@ -330,12 +339,8 @@ const Places = () => {
 
                 <input type="checkbox" id={accId} className="d-none acc" />
 
-                {placeDesc[0] && (
-                  <p>
-                    {placeDesc[0]}
-                    {` `}
-                  </p>
-                )}
+                {placeDesc[0] && <p>{placeDesc[0]} </p>}
+
                 <label
                   htmlFor={accId}
                   className="cursor-link show-more underline"
@@ -343,16 +348,20 @@ const Places = () => {
                   Show More
                 </label>
 
-                <div className="pag">
+                <div className="pag mb-2">
                   {placeDesc[1] && <p>{placeDesc[1]}</p>}
                   {placeDesc[2] && <p>{placeDesc[2]}</p>}
 
                   <div className="d-flex gap-2 mb-2 items-center flex-wrap text-14">
                     {option?.sourceTitle}
                     {uniqueLinks.map((link, ii) => {
-                      const domain = new URL(link).hostname
-                        .replace(/^www\./, "")
-                        .split(".")[0];
+                      let domain = "Source";
+                      try {
+                        domain = new URL(link).hostname
+                          .replace(/^www\./, "")
+                          .split(".")[0];
+                      } catch {}
+
                       const label =
                         domain.charAt(0).toUpperCase() + domain.slice(1);
 
@@ -375,6 +384,32 @@ const Places = () => {
               </div>
             );
           })}
+          <div className="d-flex justify-center italic pv-2 mb-3">
+            {option?.lernText}
+            <a href={option?.lernLink} className="mb-2 pl-1 inColor underline">
+              {option?.lernLinkText}
+            </a>
+          </div>
+        </div>
+      </section>
+      <section className="bg-dark">
+        <div className="container cont-space">
+          <div className="d-flex flex-col justify-center items-center text-center">
+            <h2 className="text-white">Request a Quote with Confidence</h2>
+            <p>
+              Share a few details about your project and we’ll help connect your
+              request with trusted professionals. No pressure, no obligation,
+              just a simple way to get accurate, relevant quotes.
+            </p>
+            <label
+              htmlFor="request-toggle"
+              role="button"
+              aria-label="Request a Quote"
+              className="btx d-flex items-center gap-2 cursor-link mt-3 fade-in delay-1000"
+            >
+              Request a Quote
+            </label>
+          </div>
         </div>
       </section>
     </>

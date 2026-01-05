@@ -1881,17 +1881,23 @@ type SpagesEdge = {
 };
 
 type SpagesFaq = {
+  readonly a: Maybe<Scalars['String']>;
   readonly content: Maybe<Scalars['String']>;
+  readonly q: Maybe<Scalars['String']>;
   readonly title: Maybe<Scalars['String']>;
 };
 
 type SpagesFaqFieldSelector = {
+  readonly a: InputMaybe<FieldSelectorEnum>;
   readonly content: InputMaybe<FieldSelectorEnum>;
+  readonly q: InputMaybe<FieldSelectorEnum>;
   readonly title: InputMaybe<FieldSelectorEnum>;
 };
 
 type SpagesFaqFilterInput = {
+  readonly a: InputMaybe<StringQueryOperatorInput>;
   readonly content: InputMaybe<StringQueryOperatorInput>;
+  readonly q: InputMaybe<StringQueryOperatorInput>;
   readonly title: InputMaybe<StringQueryOperatorInput>;
 };
 
@@ -1900,7 +1906,9 @@ type SpagesFaqFilterListInput = {
 };
 
 type SpagesFaqSortInput = {
+  readonly a: InputMaybe<SortOrderEnum>;
   readonly content: InputMaybe<SortOrderEnum>;
+  readonly q: InputMaybe<SortOrderEnum>;
   readonly title: InputMaybe<SortOrderEnum>;
 };
 

@@ -64,7 +64,6 @@ const CityKeywords = () => {
               <li>{single?.name}</li>
             </ul>
           </div>
-          {/* <p className="subtitle">{options?.subTitle}</p> */}
           <h2>{options?.title.replace("###", single?.name)}</h2>
           {single?.content?.split("###")[0] && (
             <p>{single?.content?.split("###")[0]}</p>
@@ -131,7 +130,7 @@ const CityKeywords = () => {
                           })}
                       </ul>
                       <a
-                        className="ph-3 mt-1 mb-3 block"
+                        className="ph-3 mt-3 font-600 italic underline text-center mb-3 block"
                         href={`/${e?.slug}/${single?.slug}/`}
                       >
                         {options?.buttonText?.replace("###", e?.name)}

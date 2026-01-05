@@ -9,9 +9,6 @@ const FooterAbove = () => {
   return (
     <section className="bg-white" id="subscribed">
       <div className="container cont-space">
-        {options?.subTitle && (
-          <p className="subtitle text-center">{options?.subTitle}</p>
-        )}
         <h2 className="text-center">{options?.title}</h2>
         {options?.content && <p className="text-center">{options?.content}</p>}
 

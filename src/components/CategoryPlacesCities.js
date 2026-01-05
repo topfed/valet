@@ -20,7 +20,6 @@ const CategoryPlacesCities = () => {
   return (
     <section className="bg-light">
       <div className="container cont-space">
-        <p className="subtitle">{options?.subTitle}</p>
         <h2>
           {options?.title
             ?.replace("###", category?.name)

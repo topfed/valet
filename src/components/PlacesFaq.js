@@ -13,14 +13,13 @@ const PlacesFaq = () => {
   return (
     <section className="bg-white" id="faq">
       <div className="container cont-space">
-        <p className="subtitle">{option?.subTitle}</p>
         <h2>{option?.title?.replace("###", keyword?.name)}</h2>
         {option?.content && (
           <p>{option?.content.replace("###", keyword?.name.toLowerCase())}</p>
         )}
         {keyword?.faq?.map((e, i) => {
           return (
-            <div className="box-border mb-3 mt-3 p-0" key={i}>
+            <div className="box-border mt-3 p-0" key={i}>
               <a
                 href={`/${keyword?.slug}/#faq`}
                 className="d-flex justify-between items-center gap-3 cursor-link p-3 inColor"

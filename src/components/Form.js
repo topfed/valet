@@ -9,7 +9,6 @@ const Form = () => {
   return (
     <section className="bg-white">
       <div className="container cont-space">
-        <p className="subtitle">{options?.subTitle}</p>
         <h2>{options?.title}</h2>
         {options?.content?.split("###")[0] && (
           <p>{options?.content?.split("###")[0]}</p>

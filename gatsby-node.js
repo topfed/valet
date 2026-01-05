@@ -157,7 +157,6 @@ exports.createPages = async ({ graphql, actions }) => {
           city: city,
           type: "place",
           update: Date.now(),
-          // update: doc?.update?.toDate?.().getTime?.(),
           places:
             [
               ...doc?.places?.filter((e) => e?.status === 3),

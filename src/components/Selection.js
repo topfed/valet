@@ -3,7 +3,8 @@ import { useGlobal } from "../data/useContext";
 import Svg from "./Svg";
 
 const Selection = () => {
-  const { settings, context } = useGlobal();
+  const { settings, context, pages } = useGlobal();
+  const data = pages?.find((e) => e?.slug === context?.slug);
   const options = (settings[context?.type] || [])?.find(
     (e) => e?.id === "Selection"
   );
@@ -23,12 +24,9 @@ const Selection = () => {
                 </a>
               </li>
               <li>/</li>
-              <li>{options?.title}</li>
+              <li>{data?.name}</li>
             </ul>
           </div>
-        )}
-        {context?.slug !== "selection-process" && (
-          <p className="subtitle">{options?.subTitle}</p>
         )}
         <h2>{options?.title}</h2>
         {options?.content?.split("###")[0] && (
