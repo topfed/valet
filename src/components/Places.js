@@ -76,9 +76,9 @@ const Places = () => {
           >
             Request a Quote
           </label> */}
-          {/* <div className="italic mt-4 text-white text-14 fade-in delay-750">
+          <div className="italic mt-2 text-white text-14 fade-in">
             {formatUpdatedDate(context?.update)}
-          </div> */}
+          </div>
         </div>
       </section>
 
@@ -271,32 +271,17 @@ const Places = () => {
                 <div className="d-flex gap-3 mb-3">
                   <div className="w-60 h-60 overflow-hidden rounded-full border-dash img-wrap">
                     <img
-                      src={fbImage || e?.image || "default.jpg"}
-                      alt={e?.title}
+                      src={fbImage || e?.image || "/default.jpg"}
+                      alt={e?.title || ""}
                       loading="lazy"
                       decoding="async"
                       referrerPolicy="no-referrer"
                       className="object-cover w-100 h-100"
-                      data-src-main={e?.image}
-                      data-src-default="/default.jpg"
-                      onError={(ev) => {
-                        const img = ev.currentTarget;
-                        if (!img.dataset.mainTried && img.dataset.srcMain) {
-                          img.dataset.mainTried = "1";
-                          img.src = img.dataset.srcMain;
-                          return;
-                        }
-                        if (!img.dataset.defaultTried) {
-                          img.dataset.defaultTried = "1";
-                          img.src = img.dataset.srcDefault;
-                          return;
-                        }
-                        const wrap = img.closest(".img-wrap");
-                        if (wrap) wrap.style.display = "none";
-                      }}
+                      data-fb={fbImage || ""}
+                      data-main={e?.image || ""}
+                      data-default="/default.jpg"
                     />
                   </div>
-
                   <div className="d-flex items-center">
                     <h3>{e?.title}</h3>
                   </div>
