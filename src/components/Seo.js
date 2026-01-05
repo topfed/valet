@@ -2,7 +2,7 @@ import React from "react";
 
 const Seo = ({ data, context }) => {
   const type = context?.type || "index";
-  const slug = context?.slug || "/";
+  const slug = context?.slug || "index";
   const slugData = data?.slugData?.find((e) => e?.slug === slug);
   const siteName = process.env.NAME;
   const language = process.env.LANGUAGE;
@@ -335,7 +335,10 @@ const Seo = ({ data, context }) => {
       inLanguage: language,
     };
   }
-  // console.log(pageSchema);
+  // console.log(title);
+  // console.log(description);
+  // console.log(logoUrl);
+  // console.log(logoUrl);
   return (
     <>
       <html lang={language} />
